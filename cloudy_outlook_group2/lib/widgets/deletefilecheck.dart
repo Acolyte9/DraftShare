@@ -1,26 +1,27 @@
 // import 'package:to_dont_list/objects/item.dart';
 import 'package:flutter/material.dart';
+import 'package:cloudy_outlook_group2/docstoragetestjaxon.dart';
 
-typedef ToDoListDeletedCallback = Function(
-    String item
-    );
+// typedef ToDoListDeletedCallback = Function(
+//     String item
+//     );
 
-class ToDoDeleteCheck extends StatefulWidget {
-  const ToDoDeleteCheck({
+class DraftShareDeleteCheck extends StatefulWidget {
+  const DraftShareDeleteCheck({
     super.key,
-    required this.item,
-    required this.onDeleteItem,
+    required this.file,
+    required this.storage,
   });
 
-  final String item;
+  final TextDocument file;
   // ToDoDeleteCheck(Item item) : item = item;
-  final ToDoListDeletedCallback onDeleteItem;
+  final DocumentStorage storage;
 
   @override
-  State<ToDoDeleteCheck> createState() => _ToDoDeleteCheckState();
+  State<DraftShareDeleteCheck> createState() => _DraftShareDeleteCheckState();
 }
 
-class _ToDoDeleteCheckState extends State<ToDoDeleteCheck> {
+class _DraftShareDeleteCheckState extends State<DraftShareDeleteCheck> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   // final TextEditingController _inputController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
@@ -60,7 +61,7 @@ class _ToDoDeleteCheckState extends State<ToDoDeleteCheck> {
           style: yesStyle,
           onPressed: () {
             setState(() {
-              widget.onDeleteItem(widget.item);
+              widget.storage.deleteDocument(widget.file.id);
               Navigator.pop(context);
             });
           },
