@@ -101,7 +101,6 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
           decoration: const InputDecoration(hintText: "Empty. Press Exit to restore text."),
         ),
       ),
-      
     );
   }
 }
