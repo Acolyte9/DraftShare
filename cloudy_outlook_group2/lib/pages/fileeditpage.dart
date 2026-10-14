@@ -31,7 +31,7 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.blue);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.grey);
 
   String valueText = "";
   String titleText = "";
@@ -51,6 +51,8 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 192, 128),
+        foregroundColor: const Color.fromARGB(255, 255, 224, 194),
         // title: Text(widget.file.title),
         // titleTextStyle: const TextStyle(
         //   fontSize: 22,
@@ -68,8 +70,6 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
           // selectionHeightStyle: kToolbarHeight
         ),
         // toolbarHeight: kToolbarHeight,
-        backgroundColor: const Color.fromARGB(255, 255, 192, 128),
-        foregroundColor: const Color.fromARGB(255, 255, 224, 194),
         actions: <Widget>[
           ElevatedButton(
             key: const Key("CancelButton"),
@@ -85,7 +85,8 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: _titleController,
             builder: (context, editcontents, child) {
-              return ElevatedButton(
+              // return ElevatedButton(
+              return IconButton(
                 key: const Key("OKButton"),
                 style: yesStyle,
                 onPressed: editcontents.text.isNotEmpty
@@ -98,7 +99,9 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
                         });
                       }
                     : null,
-                child: const Text('SAVE'),
+                // child: const Text('SAVE'),
+                icon: const Icon(Icons.save),
+                tooltip: 'Save document',
               );
             },
           ),
