@@ -27,12 +27,14 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   // final TextEditingController _inputController = TextEditingController()..text = widget.item.name;
   TextEditingController _inputController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.blue);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
 
   String valueText = "";
+  String titleText = "";
   @override
   void initState() {
     super.initState();
@@ -40,6 +42,8 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
 //        Without this stuff, the page would always be blank even if we got it to save over whatever it tried to open.
     valueText = widget.file.content;
     _inputController = TextEditingController(text: widget.file.content);
+    titleText = widget.file.title;
+    _titleController = TextEditingController(text: widget.file.title);
     // });
   }
 
@@ -47,12 +51,23 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.file.title),
-        titleTextStyle: const TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          color: Color.fromARGB(255, 0, 0, 0),
+        // title: Text(widget.file.title),
+        // titleTextStyle: const TextStyle(
+        //   fontSize: 22,
+        //   fontWeight: FontWeight.bold,
+        //   color: Color.fromARGB(255, 0, 0, 0),
+        // ),
+        title: TextField(
+          onChanged: (titleeditcontents) {
+            setState(() {
+              titleText = titleeditcontents;
+            });
+          },
+          controller: _titleController,
+          decoration: const InputDecoration(hintText: "Untitled"),
+          // selectionHeightStyle: kToolbarHeight
         ),
+        // toolbarHeight: kToolbarHeight,
         backgroundColor: const Color.fromARGB(255, 255, 192, 128),
         foregroundColor: const Color.fromARGB(255, 255, 224, 194),
         actions: <Widget>[
@@ -68,7 +83,7 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
           ),
           // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
           ValueListenableBuilder<TextEditingValue>(
-            valueListenable: _inputController,
+            valueListenable: _titleController,
             builder: (context, editcontents, child) {
               return ElevatedButton(
                 key: const Key("OKButton"),
@@ -78,7 +93,7 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
                         setState(() {
                           // vvv This should be able to update the file to the cloud from within this screen, without exiting back to the main menu.
                           // widget.onFileChanged(widget.file, valueText, _inputController);
-                          widget.storage.updateDocument(widget.file.id, title: widget.file.title, content: valueText);
+                          widget.storage.updateDocument(widget.file.id, title: titleText, content: valueText);
                           // Navigator.pop(context);
                         });
                       }
