@@ -21,6 +21,8 @@ class DocumentEditorScreen extends StatefulWidget {
 class _DocumentEditorScreenState
     extends State<DocumentEditorScreen> {
   final DocumentStorage storage = DocumentStorage();
+  final TextEditingController titleController =
+      TextEditingController();
   final TextEditingController textController =
       TextEditingController();
 
@@ -38,13 +40,20 @@ class _DocumentEditorScreenState
       isSaving = true;
     });
 
+    final title = titleController.text.trim().isEmpty
+        ? 'Untitled Document'
+        : titleController.text.trim();
+
     try {
       await storage.updateDocument(
         widget.documentId,
+        title: title,
         content: textController.text,
       );
 
       if (!mounted) return;
+
+      titleController.text = title;
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Document saved!')),
@@ -90,13 +99,24 @@ class _DocumentEditorScreenState
         final document = snapshot.data!;
 
         if (!hasLoadedDocument) {
+          titleController.text = document.title;
           textController.text = document.content;
           hasLoadedDocument = true;
         }
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(document.title),
+             title: TextField(
+              controller: titleController,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+              decoration: const InputDecoration(
+                hintText: 'Untitled Document',
+                border: InputBorder.none,
+              ),
+            ),
             actions: [
               IconButton(
                 onPressed: isSaving ? null : saveDocument,
