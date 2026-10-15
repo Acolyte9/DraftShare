@@ -5,8 +5,8 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:cloudy_outlook_group2/pages/fileeditpage.dart';
-import 'package:cloudy_outlook_group2/Objects/docstoragetestjaxon.dart';
+import 'package:cloudy_outlook_group2/pages/document_editor_screen.dart';
+import 'package:cloudy_outlook_group2/objects/docstoragetestjaxon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -31,9 +31,9 @@ void main() {
   });
 
   testWidgets('Clicking and Typing adds item to ToDoList', (tester) async {
-    TextDocument testtextdocument = TextDocument(id: "0", title: "title", content: "content", updatedAt: 0);
-    DocumentStorage storage = DocumentStorage();
-    await tester.pumpWidget(MaterialApp(home: DraftShareFileEdit(file: testtextdocument, storage: storage,)));
+    // TextDocument testtextdocument = TextDocument(id: "0", title: "title", content: "content", updatedAt: 0);
+    // DocumentStorage storage = DocumentStorage();
+    await tester.pumpWidget(MaterialApp(home: DocumentEditorScreen(documentId: "testtextdocument", documentName: "Name",)));
 
     expect(find.byType(TextField), findsOne);
 
