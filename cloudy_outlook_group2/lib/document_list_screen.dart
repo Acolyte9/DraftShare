@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'docstoragetestjaxon.dart';
 import 'document_editor_screen.dart';
+import 'package:cloudy_outlook_group2/widgets/deletefilecheck.dart';
 
 class DocumentListScreen extends StatefulWidget {
   const DocumentListScreen({super.key});
@@ -92,6 +93,13 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
                       },
                     ),
                   );
+                },
+                onLongPress: () {
+                  showDialog(
+                  context: context,
+                  builder: (_) {
+                    return DraftShareDeleteCheck(id: document.id, storage: storage,);
+                  });
                 },
               );
             },

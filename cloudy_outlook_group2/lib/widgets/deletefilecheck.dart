@@ -9,11 +9,11 @@ import 'package:cloudy_outlook_group2/docstoragetestjaxon.dart';
 class DraftShareDeleteCheck extends StatefulWidget {
   const DraftShareDeleteCheck({
     super.key,
-    required this.file,
+    required this.id,
     required this.storage,
   });
 
-  final TextDocument file;
+  final String id;
   // ToDoDeleteCheck(Item item) : item = item;
   final DocumentStorage storage;
 
@@ -61,7 +61,7 @@ class _DraftShareDeleteCheckState extends State<DraftShareDeleteCheck> {
           style: yesStyle,
           onPressed: () {
             setState(() {
-              widget.storage.deleteDocument(widget.file.id);
+              widget.storage.deleteDocument(widget.id);
               Navigator.pop(context);
             });
           },
