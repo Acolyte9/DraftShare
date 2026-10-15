@@ -106,7 +106,8 @@ class _DocumentEditorScreenState
 
         return Scaffold(
           appBar: AppBar(
-             title: TextField(
+            backgroundColor: const Color.fromARGB(255, 255, 192, 128),
+            title: TextField(
               controller: titleController,
               style: const TextStyle(
                 fontSize: 22,

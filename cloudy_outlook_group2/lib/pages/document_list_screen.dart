@@ -49,6 +49,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 192, 128),
         title: const Text('DraftShare'),
       ),
       body: StreamBuilder<List<TextDocument>>(
@@ -78,6 +79,7 @@ class _DocumentListScreenState extends State<DocumentListScreen> {
               final document = documents[index];
 
               return ListTile(
+                // tileColor: const Color.fromARGB(255, 255, 224, 194),
                 leading: const Icon(Icons.description),
                 title: Text(document.title),
                 trailing: const Icon(Icons.chevron_right),

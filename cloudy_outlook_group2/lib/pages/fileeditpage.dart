@@ -52,7 +52,7 @@ class _DraftShareFileEditState extends State<DraftShareFileEdit> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 192, 128),
-        foregroundColor: const Color.fromARGB(255, 255, 224, 194),
+        // foregroundColor: const Color.fromARGB(255, 255, 224, 194),
         // title: Text(widget.file.title),
         // titleTextStyle: const TextStyle(
         //   fontSize: 22,
