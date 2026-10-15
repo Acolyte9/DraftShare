@@ -42,13 +42,13 @@ DraftShare keeps every document in a Cloud Firestore collection and shows them i
 
 The right side of each screenshot is the Firebase console, so you can see the data change in the cloud.
 
-![Empty_Start](images/Blank_Screen.png)
+![Empty_Start](DraftShare\cloudy_outlook_group2\images\Blank_Screen.png)
 
-![New_Document](images/Fresh_Create.png)
+![New_Document](DraftShare\cloudy_outlook_group2\images\Fresh_Create.png)
 
-![Rename_and_Save](images/Updated_On_Editor.png)
+![Rename_and_Save](DraftShare\cloudy_outlook_group2\images\Updated_On_Editor.png)
 
-![List_Updated](images/Updated_On_List.png)
+![List_Updated](DraftShare\cloudy_outlook_group2\images\Updated_On_List.png)
 
 
 ## Built with / Resources
