@@ -4,20 +4,20 @@ A cloud document editor where the user creates plain-text documents, edits and r
 
 ## Who the app is for
 
-DraftShare is for people who want a simple place to keep plain-text notes and drafts that follow them between devices, some exaples:
+DraftShare is for people who want a simple place to keep plain-text notes and drafts that follow them between devices, for example:
 
 - Students on a group project who want one shared pool of notes (meeting notes, outlines, to-do lists) that everyone can open and edit.
 - Anyone who writes something on a phone and wants to keep working on it from a laptop without emailing themselves a file.
 
 ## What it does
 
-DraftShare keeps every document in a Cloud Firestore collection and shows them in a live list. Tapping **+** creates a new document and opens it in the editor. In the editor you can rename the document by editing the title at the top, write in a full-screen text box, and tap the save icon to write the title and text back to the cloud. Because every device reads from the same collection, a document created or saved on one device shows up on the others.
+DraftShare keeps every document in a Cloud Firestore collection and shows them in a live list. Tapping **+** creates a new document and opens it in the editor. In the editor you can rename the document by editing the title at the top, write in a full-screen text box, and tap the save icon to write the title and text back to the cloud. Pressing and holding a document in the list brings up a menu to delete it. Because every device reads from the same collection, a document created, saved, or deleted on one device shows up the same way on the others.
 
 ## Why it's useful
 
 - Your text lives in the cloud, not on one device, so closing the app or switching devices never loses a document.
 - There is nothing to export, attach, or upload to move a note between devices.
-- The document list updates live, so a new or renamed document appears without refreshing.
+- The document list updates live, so a new, renamed, or deleted document appears without refreshing.
 - All storage code lives in one class (`DocumentStorage`), so the screens never talk to Firebase directly. That makes the app easy to read, change, and test.
 
 ## Features
@@ -26,17 +26,18 @@ DraftShare keeps every document in a Cloud Firestore collection and shows them i
 - Create a new document with one tap
 - Edit the document title and text in the editor
 - Save changes back to the cloud, with a confirmation message
+- Delete a document: press and hold it in the list, then confirm in the menu
 - Same documents on every device
 - Navigation between the list screen and the editor screen
-- Hold down on one of the list items to summon a menu asking to delete that item
+- Color theme on both screens
 
 ### Known limitations
 
 - Saving is manual. Changes are only written when you tap the save icon.
 - Last save wins. If two people save the same document, the later save overwrites the earlier one.
 - The editor loads a document's text once, so reopen a document to see changes saved from another device. The list does update live.
-- You cannot upload a `.txt` file , and the title of a file can only be changed after the document is created.
-- if you delete an item, it is deleted from the cloud storage. Any user can delete any item at any time.
+- You cannot upload a `.txt` file, and the title can only be changed after the document is created.
+- Deleting is permanent. A deleted document is removed from Cloud Firestore, and since there is no sign-in, any user can delete any document at any time.
 - There is no sign-in. The Firestore rules are open on purpose for this class project, so anyone with the app can read and write every document.
 
 ## Screenshots
@@ -50,6 +51,8 @@ The right side of each screenshot is the Firebase console, so you can see the da
 ![Rename_and_Save](cloudy_outlook_group2/images/Updated_On_Editor.png)
 
 ![List_Updated](cloudy_outlook_group2/images/Updated_On_List.png)
+
+![Delete_Feature](cloudy_outlook_group2/images/Delete_Feature.png)
 
 ## Built with / Resources
 
