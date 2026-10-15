@@ -28,14 +28,15 @@ DraftShare keeps every document in a Cloud Firestore collection and shows them i
 - Save changes back to the cloud, with a confirmation message
 - Same documents on every device
 - Navigation between the list screen and the editor screen
-- Delete confirmation dialog (built, not yet connected to the list)
+- Hold down on one of the list items to summon a menu asking to delete that item
 
 ### Known limitations
 
 - Saving is manual. Changes are only written when you tap the save icon.
 - Last save wins. If two people save the same document, the later save overwrites the earlier one.
 - The editor loads a document's text once, so reopen a document to see changes saved from another device. The list does update live.
-- There is no delete button in the app yet, no `.txt` file upload, and the title can only be changed after the document is created.
+- You cannot upload a `.txt` file , and the title of a file can only be changed after the document is created.
+- if you delete an item, it is deleted from the cloud storage. Any user can delete any item at any time.
 - There is no sign-in. The Firestore rules are open on purpose for this class project, so anyone with the app can read and write every document.
 
 ## Screenshots
