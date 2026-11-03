@@ -68,6 +68,9 @@ class _DraftShareDeleteCheckState extends State<DraftShareDeleteCheck> {
               widget.storage.deleteDocument(widget.id);
               int count = 0;
               Navigator.of(context).popUntil((_) => count++ >= 2);
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Document deleted.')));
             });
           },
           child: const Text('OK'),
