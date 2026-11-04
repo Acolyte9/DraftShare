@@ -25,9 +25,13 @@ class _DraftShareDeleteCheckState extends State<DraftShareDeleteCheck> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   // final TextEditingController _inputController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
+    textStyle: const TextStyle(fontSize: 20),
+    backgroundColor: Colors.red,
+  );
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.grey);
+    textStyle: const TextStyle(fontSize: 20),
+    backgroundColor: Colors.grey,
+  );
 
   // String valueText = "";
 
@@ -62,12 +66,16 @@ class _DraftShareDeleteCheckState extends State<DraftShareDeleteCheck> {
           onPressed: () {
             setState(() {
               widget.storage.deleteDocument(widget.id);
-              Navigator.pop(context);
+              int count = 0;
+              Navigator.of(context).popUntil((_) => count++ >= 2);
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('Document deleted.')));
             });
           },
           child: const Text('OK'),
         ),
-        
+
         // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
         // ValueListenableBuilder<TextEditingValue>(
         //   valueListenable: _inputController,

@@ -1,5 +1,8 @@
+import 'dart:collection';
 
+import 'package:cloudy_outlook_group2/widgets/deletefilecheck.dart';
 import 'package:flutter/material.dart';
+
 import '../objects/docstoragetestjaxon.dart';
 
 class DocumentEditorScreen extends StatefulWidget {
@@ -18,13 +21,45 @@ class DocumentEditorScreen extends StatefulWidget {
   }
 }
 
-class _DocumentEditorScreenState
-    extends State<DocumentEditorScreen> {
+class DataQueue<E> {
+  final List<E> data = [];
+  final int maxSize;
+
+  DataQueue({required this.maxSize});
+
+  void push(E value) {
+    if (data.length == maxSize) {
+      data.removeAt(0);
+    }
+
+    data.add(value);
+  }
+
+  E? pop() {
+    if (data.isEmpty) return null;
+
+    E value = data.removeLast();
+
+    return value;
+  }
+
+  E? peek() {
+    if (data.isEmpty) return null;
+
+    return data.last;
+  }
+
+  bool isEmpty() {
+    return data.isEmpty;
+  }
+}
+
+class _DocumentEditorScreenState extends State<DocumentEditorScreen> {
   final DocumentStorage storage = DocumentStorage();
-  final TextEditingController titleController =
-      TextEditingController();
-  final TextEditingController textController =
-      TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
+
+  final DataQueue<String> history = DataQueue(maxSize: 100);
 
   bool hasLoadedDocument = false;
   bool isSaving = false;
@@ -55,9 +90,8 @@ class _DocumentEditorScreenState
 
       titleController.text = title;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Document saved!')),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Document saved!')));
     } catch (error) {
       if (!mounted) return;
 
@@ -90,9 +124,7 @@ class _DocumentEditorScreenState
         if (!snapshot.hasData) {
           return Scaffold(
             appBar: AppBar(title: Text(widget.documentName)),
-            body: const Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: const Center(child: CircularProgressIndicator()),
           );
         }
 
@@ -109,10 +141,7 @@ class _DocumentEditorScreenState
             backgroundColor: const Color.fromARGB(255, 255, 192, 128),
             title: TextField(
               controller: titleController,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                 hintText: 'Untitled Document',
                 border: InputBorder.none,
@@ -124,6 +153,14 @@ class _DocumentEditorScreenState
                 icon: const Icon(Icons.save),
                 tooltip: 'Save document',
               ),
+              IconButton(
+                onPressed: isSaving ? null : undoDocument,
+                icon: Icon(Icons.undo),
+              ),
+              IconButton(
+                onPressed: isSaving ? null : deleteDocument,
+                icon: Icon(Icons.delete),
+              ),
             ],
           ),
           body: Padding(
@@ -133,6 +170,9 @@ class _DocumentEditorScreenState
               maxLines: null,
               expands: true,
               textAlignVertical: TextAlignVertical.top,
+              onChanged: (value) {
+                history.push(value);
+              },
               decoration: const InputDecoration(
                 hintText: 'Start writing your document...',
                 border: OutlineInputBorder(),
@@ -140,6 +180,23 @@ class _DocumentEditorScreenState
             ),
           ),
         );
+      },
+    );
+  }
+
+  void undoDocument() {
+    if (history.isEmpty()) return;
+    if (history.peek() == textController.text) history.pop();
+    setState(() {
+      textController.text = history.pop()!;
+    });
+  }
+
+  void deleteDocument() {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return DraftShareDeleteCheck(id: widget.documentId, storage: storage);
       },
     );
   }
